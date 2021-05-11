@@ -7,15 +7,16 @@ const contactContent = document.querySelector('#contact-content');
 
 // Fake input
 let fakeInput = ''; // variable which stores fake terminal input
+let fakeInputChars = new RegExp(/[a-z0-9]/, 'gi');
 
 body.addEventListener('keydown', (e) => {
   if (e.key === 'Backspace') {
-    fakeInput = fakeInput.slice(0, -1);
+    fakeInput = fakeInput.slice(0, -1); // delete last character
   } else if (e.key === 'Enter') {
     checkFakeInput(fakeInput);
-    fakeInput = '';
-  } else {
-    fakeInput += e.key;
+    fakeInput = ''; // clear input
+  } else if (e.key.match(fakeInputChars)?.length === 1) {
+    fakeInput += e.key; // allow all other characters
   }
 
   // console.log(fakeInput);
