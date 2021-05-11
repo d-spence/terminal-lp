@@ -1,5 +1,6 @@
 const body = document.querySelector('body');
-const fake = document.querySelector('#fake');
+const fakeIn = document.querySelector('#fake-in');
+const fakeOut = document.querySelector('#fake-out');
 const about = document.querySelector('#about');
 const contact = document.querySelector('#contact');
 const aboutContent = document.querySelector('#about-content');
@@ -7,7 +8,8 @@ const contactContent = document.querySelector('#contact-content');
 
 // Fake input
 let fakeInput = ''; // variable which stores fake terminal input
-let fakeInputChars = new RegExp(/[a-z0-9]/, 'gi');
+const fakeInputChars = new RegExp(/[a-z0-9]/, 'gi');
+const fakeCmds = ['help', 'test', 'hello', 'quote'];
 
 body.addEventListener('keydown', (e) => {
   if (e.key === 'Backspace') {
@@ -20,11 +22,18 @@ body.addEventListener('keydown', (e) => {
   }
 
   // console.log(fakeInput);
-  fake.innerHTML = fakeInput;
+  fakeIn.innerHTML = fakeInput;
 })
 
 const checkFakeInput = (input) => {
-  return;
+  switch (input.toLowerCase()) {
+    case '': fakeOut.innerHTML = ''; break; // return blank string if input is empty
+    case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
+    case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
+    case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
+    case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
+    default: fakeOut.innerHTML = `Command '${input}' not found`; break;
+  }
 }
 
 // WinBox
