@@ -12,6 +12,7 @@ const fakeInputChars = new RegExp(/[a-z 0-9]/, 'gi');
 const fakeCmds = ['help', 'test', 'hello', 'quote'];
 
 body.addEventListener('keydown', (e) => {
+  e.preventDefault();
   if (e.key === 'Backspace') {
     fakeInput = fakeInput.slice(0, -1); // delete last character
   } else if (e.key === 'Enter') {
@@ -26,23 +27,20 @@ body.addEventListener('keydown', (e) => {
 })
 
 const checkFakeInput = (input) => {
-  if (input === '') {
-    fakeOut.innerHTML = '>'; return; // return if input is empty
-  } else {
-    switch (input.toLowerCase()) {
-      case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
-      case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
-      case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
-      case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
-      default: fakeOut.innerHTML = `Command '${input}' not found`; break;
-    }
-
-    fakeOut.classList.add('fade');
-    // add class with fadeout animation and then remove after 7s
-    setTimeout(() => {
-      fakeOut.classList.remove('fade');
-    }, 1000);
+  switch (input.toLowerCase()) {
+    case '': fakeOut.innerHTML = ''; return; // return if input is empty
+    case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
+    case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
+    case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
+    case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
+    default: fakeOut.innerHTML = `Command '${input}' not found`; break;
   }
+
+  // add class with fadein animation and remove after timeout
+  fakeOut.classList.add('fade');
+  setTimeout(() => {
+    fakeOut.classList.remove('fade');
+  }, 1000);
 }
 
 // WinBox configuration
@@ -64,7 +62,7 @@ const wbDefaults = {
 about.addEventListener('click', () => {
   const aboutBox = new WinBox({
     ...wbDefaults,
-    title: '/about',
+    title: '~/about',
     background: '#00aa00',
     mount: aboutContent,
   });
@@ -73,7 +71,7 @@ about.addEventListener('click', () => {
 contact.addEventListener('click', () => {
   const contactBox = new WinBox({
     ...wbDefaults,
-    title: '/contact',
+    title: '~/contact',
     x: 40,
     y: 80,
     height: '300px',
