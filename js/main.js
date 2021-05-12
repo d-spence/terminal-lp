@@ -8,7 +8,7 @@ const contactContent = document.querySelector('#contact-content');
 
 // Fake input
 let fakeInput = ''; // variable which stores fake terminal input
-const fakeInputChars = new RegExp(/[a-z0-9]/, 'gi');
+const fakeInputChars = new RegExp(/[a-z 0-9]/, 'gi');
 const fakeCmds = ['help', 'test', 'hello', 'quote'];
 
 body.addEventListener('keydown', (e) => {
@@ -26,17 +26,26 @@ body.addEventListener('keydown', (e) => {
 })
 
 const checkFakeInput = (input) => {
-  switch (input.toLowerCase()) {
-    case '': fakeOut.innerHTML = ''; break; // return blank string if input is empty
-    case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
-    case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
-    case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
-    case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
-    default: fakeOut.innerHTML = `Command '${input}' not found`; break;
+  if (input === '') {
+    fakeOut.innerHTML = '>'; return; // return if input is empty
+  } else {
+    switch (input.toLowerCase()) {
+      case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
+      case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
+      case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
+      case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
+      default: fakeOut.innerHTML = `Command '${input}' not found`; break;
+    }
+
+    fakeOut.classList.add('fade');
+    // add class with fadeout animation and then remove after 7s
+    setTimeout(() => {
+      fakeOut.classList.remove('fade');
+    }, 1000);
   }
 }
 
-// WinBox
+// WinBox configuration
 const wbDefaults = {
   width: '400px',
   height: '400px',

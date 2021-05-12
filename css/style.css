@@ -21,6 +21,15 @@ body {
   line-height: 1.6;
 }
 
+header {
+  /* text-align: center; */
+  background-color: #222;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  padding: 0 20px;
+  transition: 0.5s all;
+}
+
 h1, h2 {
   font-family: 'VT323', monospace;
   color: var(--text-color);
@@ -96,6 +105,14 @@ nav ul li {
   animation: 1s blink step-end infinite;
 }
 
+.fade {
+  animation: 1s fadein ease-in;
+}
+
+#fake-out {
+  color: #555;
+}
+
 @keyframes blink {
   from, 
   to {
@@ -106,5 +123,15 @@ nav ul li {
   50% {
     color: var(--text-color);
     background-color: var(--text-color);
+  }
+}
+
+@keyframes fadein {
+  25% {
+    color: var(--text-color)
+  }
+
+  to {
+    color: #555;
   }
 }
