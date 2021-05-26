@@ -9,7 +9,8 @@ const contactContent = document.querySelector('#contact-content');
 // Fake input
 let fakeInput = ''; // variable which stores fake terminal input
 const fakeInputChars = new RegExp(/[a-z 0-9]/, 'gi');
-const fakeCmds = ['help', 'test', 'hello', 'quote'];
+const fakeCmds = ['help', 'test', 'quote', 'shutdown', 'destroy', 'abort', 'hello'];
+let iid = null; // interval id
 
 body.addEventListener('keydown', (e) => {
   e.preventDefault();
@@ -24,18 +25,49 @@ body.addEventListener('keydown', (e) => {
 
   // console.log(fakeInput);
   fakeIn.innerHTML = fakeInput;
-})
+});
 
 const checkFakeInput = (input) => {
   switch (input.toLowerCase()) {
     case '': fakeOut.innerHTML = ''; return; // return if input is empty
     case 'help': fakeOut.innerHTML = `Available commands:${fakeCmds.map(cmd => ' ' + cmd)}`; break;
-    case 'test': fakeOut.innerHTML = 'This is a test, do not be alarmed.'; break;
-    case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
+    case 'test': fakeOut.innerHTML = 'This is a test, please remain calm.'; break;
     case 'quote': fakeOut.innerHTML = '"Never trust a computer you can\'t throw out a window."'; break;
+    case 'shutdown': fakeOut.innerHTML = 'Shut down will occur in 9999999999999999 hours...'; break;
+    case 'destroy': selfDestruct(); break;
+    case 'abort': abortDestruct(); break;
+    case 'hello': fakeOut.innerHTML = 'Hello, world!'; break;
     default: fakeOut.innerHTML = `Command '${input}' not found`; break;
   }
 
+  fadeOutput();
+}
+
+const selfDestruct = () => {
+  let i = 30;
+  iid = setInterval(() => {
+    i--;
+    if (i > -1) {
+      fakeOut.innerHTML = `Page will self-destruct in t-${i} seconds...`;
+    } else {
+      body.innerHTML = null; // destroy page
+      console.log('Self-destruct was successful!');
+      clearInterval(iid);
+    }
+  }, 1000);
+}
+
+const abortDestruct = () => {
+  if (iid) {
+    clearInterval(iid);
+    iid = null;
+    fakeOut.innerHTML = `Self-destruct sequence was aborted.`;
+  } else {
+    fakeOut.innerHTML = `Nothing to abort.`;
+  }
+}
+
+const fadeOutput = () => {
   // add class with fadein animation and remove after timeout
   fakeOut.classList.add('fade');
   setTimeout(() => {
@@ -66,7 +98,7 @@ about.addEventListener('click', () => {
     background: '#00aa00',
     mount: aboutContent,
   });
-})
+});
 
 contact.addEventListener('click', () => {
   const contactBox = new WinBox({
@@ -77,4 +109,4 @@ contact.addEventListener('click', () => {
     height: '300px',
     mount: contactContent,
   });
-})
+});
