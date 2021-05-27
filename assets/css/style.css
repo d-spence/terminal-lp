@@ -19,6 +19,8 @@ body {
   color: #ccc;
   font-size: 18px;
   line-height: 1.6;
+  height: 100vh;
+  width: 100%;
 }
 
 h1, h2 {
@@ -107,6 +109,17 @@ nav ul li {
 
 .fade {
   animation: 1s fadein ease-in;
+}
+
+#exp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  /* z-index: 1000; */
 }
 
 #fake-out {

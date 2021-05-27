@@ -23,7 +23,6 @@ body.addEventListener('keydown', (e) => {
     fakeInput += e.key; // allow all other characters
   }
 
-  // console.log(fakeInput);
   fakeIn.innerHTML = fakeInput;
 });
 
@@ -50,7 +49,8 @@ const selfDestruct = () => {
     if (i > -1) {
       fakeOut.innerHTML = `Page will self-destruct in t-${i} seconds...`;
     } else {
-      body.innerHTML = null; // destroy page
+      // body.innerHTML = '<a href="https://dspence.net/">Back</a>'; // destroy page
+      body.innerHTML = '<video id="exp" src="assets/vid/exp.mp4" muted loop autoplay></video>'; // destroy page
       console.log('Self-destruct was successful!');
       clearInterval(iid);
     }
