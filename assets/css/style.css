@@ -102,7 +102,7 @@ nav ul li {
 
 .cursor {
   display: inline-block;
-  line-height: 0.75em;
+  line-height: 1em;
   margin: 0 5px;
   animation: 1s blink step-end infinite;
 }
